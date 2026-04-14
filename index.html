@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GripMaster — Universal Jar & Bottle Opener</title>
+  <meta name="description" content="Open any jar or bottle effortlessly. GripMaster's V-shaped rubber grips hold different sized containers for one-handed opening." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 68px);
+      display: flex; align-items: center;
+      overflow: hidden;
+      padding: 80px 5%;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 70% 60% at 60% 50%, rgba(249,115,22,0.07) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 50% at 20% 80%, rgba(168,173,184,0.04) 0%, transparent 60%);
+    }
+    .hero-noise {
+      position: absolute; inset: 0; z-index: 1;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 580px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow-line { width: 40px; height: 2px; background: var(--orange); }
+    .hero h1 { color: var(--white); margin-bottom: 24px; }
+    .hero h1 em { font-style: italic; color: var(--orange); font-family: 'DM Serif Display', serif; font-size: 0.9em; }
+    .hero-desc { font-size: 1.1rem; margin-bottom: 36px; max-width: 460px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--orange); }
+    .stat-label { font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+    /* Product visual right side */
+    .hero-visual {
+      position: absolute; right: 4%; top: 50%; transform: translateY(-50%);
+      z-index: 2;
+      width: 42%;
+      max-width: 540px;
+      animation: fadeIn 1s ease 0.2s both;
+    }
+    .hero-visual-inner {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(249,115,22,0.2);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(249,115,22,0.06);
+    }
+    .hero-visual img {
+      width: 100%; display: block;
+      filter: brightness(0.92) contrast(1.08);
+    }
+    .hero-tag {
+      position: absolute; top: 20px; left: 20px;
+      background: rgba(13,14,16,0.88);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--orange);
+      backdrop-filter: blur(10px);
+    }
+
+    /* ── FEATURES ── */
+    .features { background: var(--bg2); }
+    .features-header { text-align: center; max-width: 640px; margin: 0 auto 60px; }
+    .feature-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .card h3 { margin-bottom: 10px; color: var(--silver-light); font-size: 1.2rem; font-family: 'DM Sans', sans-serif; font-weight: 600; letter-spacing: 0; }
+
+    /* ── QUICK HOW ── */
+    .quick-how { position: relative; overflow: hidden; }
+    .quick-how-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .steps-list { display: flex; flex-direction: column; gap: 0; }
+    .step-item {
+      display: flex; gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--orange);
+      opacity: 0.35;
+      line-height: 1;
+      min-width: 44px;
+      transition: opacity 0.2s;
+    }
+    .step-item:hover .step-num { opacity: 1; }
+    .step-text h4 { font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+    .step-text p { font-size: 0.9rem; margin: 0; }
+    .quick-visual { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+    .quick-visual img { width: 100%; display: block; }
+    .quick-visual-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(249,115,22,0.08), transparent 60%);
+    }
+
+    /* ── SOCIAL PROOF ── */
+    .social-proof { background: var(--bg3); }
+    .review-card { position: relative; }
+    .review-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--silver-light);
+      line-height: 1.6;
+      margin: 16px 0;
+    }
+    .reviewer { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+    .reviewer-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), #c45d0e);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.9rem; color: #fff;
+      flex-shrink: 0;
+    }
+    .reviewer-name { font-weight: 600; font-size: 0.9rem; color: var(--white); }
+    .reviewer-tag { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, #1a1008, #0d0e10);
+      border-top: 1px solid rgba(249,115,22,0.15);
+      border-bottom: 1px solid rgba(249,115,22,0.15);
+      text-align: center;
+    }
+    .cta-banner h2 { margin-bottom: 16px; }
+    .cta-banner p { max-width: 500px; margin: 0 auto 36px; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 1000px) {
+      .hero-visual { display: none; }
+      .quick-how-inner { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Grip<span>Master</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="#buy" class="nav-cta">Buy Now</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-noise"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span class="section-label" style="margin:0">Kitchen Innovation</span>
+        </div>
+        <h1>Open Every Jar.<br><em>Without the Struggle.</em></h1>
+        <p class="hero-desc">GripMaster's V-shaped rubber grips lock onto any jar or bottle — from pasta sauces to pickle jars — so you can twist off the lid with ease. No more banging, struggling, or asking for help.</p>
+        <div class="hero-actions">
+          <a href="#buy" class="btn btn-primary">Shop Now →</a>
+          <a href="how-it-works.html" class="btn btn-outline">See How It Works</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">99<span>%</span></div>
+            <div class="stat-label">Success Rate</div>
+          </div>
+          <div>
+            <div class="stat-num">4.8<span>★</span></div>
+            <div class="stat-label">Avg. Rating</div>
+          </div>
+          <div>
+            <div class="stat-num">10<span>k+</span></div>
+            <div class="stat-label">Happy Customers</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-visual-inner">
+          <div class="hero-tag">✦ Universal Fit</div>
+          <img src="images/product-cross-section.png" alt="GripMaster cross-section view showing V-shaped rubber grips" />
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+      <div class="features-header">
+        <span class="section-label">Why GripMaster</span>
+        <h2>Built for Every Kitchen</h2>
+        <div class="divider" style="margin:16px auto;"></div>
+        <p>Engineered with one goal: make opening jars and bottles effortless for everyone — arthritis sufferers, seniors, and anyone who's ever lost a battle with a stubborn lid.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="feature-icon">⚙️</div>
+          <h3>Universal V-Grip</h3>
+          <p>Tapered rubber fins automatically compress to match any container size — from slim bottles to wide-mouth mason jars.</p>
+        </div>
+        <div class="card">
+          <div class="feature-icon">🦾</div>
+          <h3>Hands-Free Holding</h3>
+          <p>Place the jar in, and the grips do the locking. Both hands are free — one to stabilize, one to twist the lid off.</p>
+        </div>
+        <div class="card">
+          <div class="feature-icon">🔒</div>
+          <h3>Non-Slip Base</h3>
+          <p>A rubber-rimmed base stays planted firmly on your countertop while you apply torque — no sliding, no mess.</p>
+        </div>
+        <div class="card">
+          <div class="feature-icon">♿</div>
+          <h3>Arthritis Friendly</h3>
+          <p>Designed for people with limited grip strength. No squeezing required — just drop in and twist.</p>
+        </div>
+        <div class="card">
+          <div class="feature-icon">🧼</div>
+          <h3>Easy to Clean</h3>
+          <p>Wipe-clean rubber fins and dishwasher-safe construction keep things hygienic without the hassle.</p>
+        </div>
+        <div class="card">
+          <div class="feature-icon">🏠</div>
+          <h3>Countertop Ready</h3>
+          <p>Compact, attractive design sits right on your counter — a functional kitchen tool that looks the part.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK HOW IT WORKS -->
+    <section class="quick-how">
+      <div class="quick-how-inner">
+        <div>
+          <span class="section-label">Simple Process</span>
+          <h2>Four Steps to Open Anything</h2>
+          <div class="divider"></div>
+          <div class="steps-list">
+            <div class="step-item">
+              <div class="step-num">01</div>
+              <div class="step-text">
+                <h4>Place Jar or Bottle</h4>
+                <p>Slide any container into the V-shaped opening.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">02</div>
+              <div class="step-text">
+                <h4>Let the Grip Lock In</h4>
+                <p>Rubber fins compress automatically around the sides.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">03</div>
+              <div class="step-text">
+                <h4>Twist the Lid</h4>
+                <p>Grip the lid with your hand and turn counterclockwise.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">04</div>
+              <div class="step-text">
+                <h4>Open Effortlessly</h4>
+                <p>Lift off the lid — done! No tools needed.</p>
+              </div>
+            </div>
+          </div>
+          <a href="how-it-works.html" class="btn btn-primary" style="margin-top:32px;">Full Breakdown →</a>
+        </div>
+        <div class="quick-visual">
+          <img src="images/product-in-use.png" alt="GripMaster holding a jar of sauce" />
+          <div class="quick-visual-overlay"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS STRIP -->
+    <section class="social-proof">
+      <div style="text-align:center; max-width:640px; margin:0 auto 60px;">
+        <span class="section-label">Customer Reviews</span>
+        <h2>People Love GripMaster</h2>
+        <div class="divider" style="margin:16px auto;"></div>
+        <p>Join thousands of customers who've made stubborn jars a thing of the past.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-quote">"Life-changing for someone with arthritis. I can open my own jars again for the first time in years!"</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">M</div>
+            <div>
+              <div class="reviewer-name">Margaret T.</div>
+              <div class="reviewer-tag">Verified Purchase</div>
+            </div>
+          </div>
+        </div>
+        <div class="card review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-quote">"Works on every jar I've tried — pasta sauce, pickles, jam. The rubber grips are surprisingly strong."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">J</div>
+            <div>
+              <div class="reviewer-name">James R.</div>
+              <div class="reviewer-tag">Verified Purchase</div>
+            </div>
+          </div>
+        </div>
+        <div class="card review-card">
+          <div class="stars">★★★★☆</div>
+          <p class="review-quote">"Bought this as a gift for my mom. She calls it the best kitchen gadget she's ever owned."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">S</div>
+            <div>
+              <div class="reviewer-name">Sarah K.</div>
+              <div class="reviewer-tag">Verified Purchase</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:40px;">
+        <a href="reviews.html" class="btn btn-outline">Read All Reviews →</a>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-banner" id="buy">
+      <span class="section-label">Get Yours Today</span>
+      <h2>Ready to Open Anything?</h2>
+      <p>Available on Amazon with free shipping on qualifying orders. Comes with a 30-day satisfaction guarantee.</p>
+      <a href="https://amazon.com" target="_blank" class="btn btn-primary" style="font-size:1rem; padding:16px 40px;">Shop on Amazon →</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.4rem;">Grip<span>Master</span></a>
+        <p>The universal jar & bottle opener designed for every kitchen and every hand.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="support.html#faq">FAQ</a></li>
+          <li><a href="support.html#contact">Contact Us</a></li>
+          <li><a href="support.html#warranty">Warranty</a></li>
+          <li><a href="support.html#returns">Returns</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 GripMaster. All rights reserved.</span>
+      <span>Made with care for every kitchen.</span>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
