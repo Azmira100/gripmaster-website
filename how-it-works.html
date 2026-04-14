@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works — GripMaster Jar & Bottle Opener</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .page-hero {
+      padding: 100px 5% 80px;
+      position: relative; overflow: hidden;
+      background: linear-gradient(160deg, #0a1013 0%, var(--bg) 60%);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%);
+    }
+    .page-hero-inner { max-width: 680px; position: relative; z-index: 1; }
+    .page-hero h1 { margin: 12px 0 20px; }
+    .page-hero p { font-size: 1.1rem; }
+
+    /* STEPS */
+    .steps-section { background: var(--bg2); }
+    .steps-timeline {
+      display: flex; flex-direction: column; gap: 0;
+      max-width: 900px; margin: 0 auto;
+      position: relative;
+    }
+    .steps-timeline::before {
+      content: '';
+      position: absolute; left: 39px; top: 60px; bottom: 60px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--orange), transparent);
+    }
+    .timeline-step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 32px; align-items: start;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .timeline-step:last-child { border-bottom: none; }
+    .ts-num-wrap {
+      display: flex; justify-content: center;
+      padding-top: 4px;
+      position: relative; z-index: 1;
+    }
+    .ts-num {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 8px rgba(249,115,22,0.12);
+    }
+    .ts-content h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--white);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .ts-content p { margin-bottom: 16px; }
+    .ts-tip {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(249,115,22,0.08);
+      border: 1px solid rgba(249,115,22,0.2);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    /* SCIENCE */
+    .science-section { }
+    .science-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .science-text h2 { margin: 12px 0 20px; }
+    .science-text p { margin-bottom: 16px; }
+    .science-points { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+    .sci-point {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s;
+    }
+    .sci-point:hover { border-color: rgba(249,115,22,0.3); }
+    .sci-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .sci-point p { margin: 0; font-size: 0.9rem; }
+    .sci-point strong { color: var(--white); display: block; margin-bottom: 3px; }
+
+    .science-visual {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .science-visual img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* COMPATIBLE -->
+    .compat-section { background: var(--bg3); }
+    .compat-section h2 { margin: 12px 0 16px; }
+    .compat-section > p { max-width: 600px; margin-bottom: 48px; }
+    .compat-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+    }
+    .compat-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 16px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .compat-item:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-3px); }
+    .compat-item .ci-icon { font-size: 2rem; margin-bottom: 10px; }
+    .compat-item p { font-size: 0.82rem; margin: 0; }
+
+    /* TIPS -->
+    .tips-section h2 { margin: 12px 0 40px; }
+    .tip-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .tip-card {
+      border-left: 3px solid var(--orange);
+      padding: 20px 24px;
+      background: var(--bg2);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .tip-card h4 { font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--white); margin-bottom: 8px; font-size: 0.95rem; }
+    .tip-card p { font-size: 0.88rem; margin: 0; }
+
+    @media (max-width: 900px) {
+      .science-inner { grid-template-columns: 1fr; }
+      .compat-grid { grid-template-columns: repeat(3, 1fr); }
+      .tip-cards { grid-template-columns: 1fr 1fr; }
+      .steps-timeline::before { display: none; }
+    }
+    @media (max-width: 580px) {
+      .compat-grid { grid-template-columns: repeat(2, 1fr); }
+      .tip-cards { grid-template-columns: 1fr; }
+      .timeline-step { grid-template-columns: 56px 1fr; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Grip<span>Master</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="how-it-works.html" class="active">How It Works</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="index.html#buy" class="nav-cta">Buy Now</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <main>
+    <div class="page-hero">
+      <div class="page-hero-inner">
+        <span class="section-label">Step-by-Step</span>
+        <h1>How GripMaster Works</h1>
+        <p>Four simple steps. No tools. No adjustments. Just place your jar, let the grips do their thing, and twist.</p>
+      </div>
+    </div>
+
+    <!-- STEPS TIMELINE -->
+    <section class="steps-section">
+      <span class="section-label">The Process</span>
+      <h2 style="margin-bottom:50px;">Step by Step</h2>
+      <div class="steps-timeline">
+
+        <div class="timeline-step">
+          <div class="ts-num-wrap"><div class="ts-num">1</div></div>
+          <div class="ts-content">
+            <h3>Place Your Jar or Bottle</h3>
+            <p>Slide your jar or bottle down into one of GripMaster's two V-shaped slots. The opening is wide at the top, so you don't need to aim precisely — just lower it in and let gravity do the guiding.</p>
+            <div class="ts-tip">💡 Works with jars from 1.5" to 4.5" wide — pasta sauces, pickle jars, salsa, jam, and more.</div>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="ts-num-wrap"><div class="ts-num">2</div></div>
+          <div class="ts-content">
+            <h3>Let the Grip Lock In</h3>
+            <p>As the container slides down into the tapered channel, the rubber fins automatically compress against the sides. The V-shape creates even pressure from both sides simultaneously — no manual adjustment needed.</p>
+            <div class="ts-tip">💡 The heavier the jar, the stronger the grip — GripMaster actually grips tighter under load.</div>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="ts-num-wrap"><div class="ts-num">3</div></div>
+          <div class="ts-content">
+            <h3>Twist the Lid</h3>
+            <p>With the jar locked in place by the grips, use your hand to grip the lid and turn counterclockwise. Because the jar can't rotate, all of your turning force goes directly into breaking the vacuum seal — not wasted fighting the jar itself.</p>
+            <div class="ts-tip">💡 For vacuum-sealed jars, you may hear a satisfying "pop" as the seal breaks — that's normal and good!</div>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="ts-num-wrap"><div class="ts-num">4</div></div>
+          <div class="ts-content">
+            <h3>Open Effortlessly</h3>
+            <p>Lift off the lid — done! Remove your jar from the GripMaster slot and enjoy your food. The rubber fins retract when the jar is lifted, ready for the next container.</p>
+            <div class="ts-tip">💡 The dual-slot design means you can have two jars ready at once — great for cooking multiple dishes.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- THE SCIENCE -->
+    <section>
+      <div class="science-inner">
+        <div class="science-text">
+          <span class="section-label">The Engineering</span>
+          <h2>The Science Behind the Grip</h2>
+          <p>GripMaster isn't magic — it's physics. The V-shaped tapered channel converts the downward weight of the jar into lateral clamping pressure on the container walls. Here's how it all works together:</p>
+          <div class="science-points">
+            <div class="sci-point">
+              <div class="sci-icon">📐</div>
+              <div>
+                <p><strong>V-Taper Geometry</strong>As the jar slides deeper, the narrowing channel forces rubber fins inward from both sides, self-centering the container and distributing grip evenly.</p>
+              </div>
+            </div>
+            <div class="sci-point">
+              <div class="sci-icon">🔁</div>
+              <div>
+                <p><strong>Counter-Torque Mechanism</strong>When you twist the lid clockwise (to tighten) or counterclockwise (to open), the grip actually increases — torque pushes the jar deeper into the channel.</p>
+              </div>
+            </div>
+            <div class="sci-point">
+              <div class="sci-icon">🧱</div>
+              <div>
+                <p><strong>Non-Slip Base</strong>A rubber-rimmed base prevents the entire unit from sliding on the countertop while you apply opening force.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="science-visual">
+          <img src="images/product-cross-section.png" alt="Cross-section view showing how rubber grips compress around jar" />
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPATIBLE -->
+    <section class="compat-section">
+      <span class="section-label">Compatibility</span>
+      <h2>Works With Almost Anything</h2>
+      <p>GripMaster's self-adjusting grip handles a huge variety of containers without any changes or settings.</p>
+      <div class="compat-grid">
+        <div class="compat-item">
+          <div class="ci-icon">🍝</div>
+          <p>Pasta Sauce Jars</p>
+        </div>
+        <div class="compat-item">
+          <div class="ci-icon">🥒</div>
+          <p>Pickle Jars</p>
+        </div>
+        <div class="compat-item">
+          <div class="ci-icon">🍓</div>
+          <p>Jam & Jelly</p>
+        </div>
+        <div class="compat-item">
+          <div class="ci-icon">🌶️</div>
+          <p>Salsa & Sauces</p>
+        </div>
+        <div class="compat-item">
+          <div class="ci-icon">🍯</div>
+          <p>Honey Jars</p>
+        </div>
+        <div class="compat-item">
+          <div class="ci-icon">💊</div>
+          <p>Supplement Bottles</p>
+        </div>
+        <div class="compat-item">
+          <div class="ci-icon">💧</div>
+          <p>Water Bottles</p>
+        </div>
+        <div class="compat-item">
+          <div class="ci-icon">🧴</div>
+          <p>Lotion Bottles</p>
+        </div>
+        <div class="compat-item">
+          <div class="ci-icon">🫙</div>
+          <p>Mason Jars</p>
+        </div>
+        <div class="compat-item">
+          <div class="ci-icon">🥜</div>
+          <p>Peanut Butter</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIPS -->
+    <section>
+      <span class="section-label">Pro Tips</span>
+      <h2>Get the Most Out of Your GripMaster</h2>
+      <div class="tip-cards">
+        <div class="tip-card">
+          <h4>Warm the Lid First</h4>
+          <p>For extremely stubborn vacuum-sealed jars, run warm water over the lid for 30 seconds before using GripMaster. This expands the metal slightly and makes opening easier.</p>
+        </div>
+        <div class="tip-card">
+          <h4>Center the Container</h4>
+          <p>Let the jar slide all the way down until it stops moving. A centered jar means the grip is maximized on both sides evenly.</p>
+        </div>
+        <div class="tip-card">
+          <h4>Clean Regularly</h4>
+          <p>Wipe down the rubber fins every few weeks to maintain maximum grip. Food residue on the fins can reduce friction over time.</p>
+        </div>
+        <div class="tip-card">
+          <h4>Use Both Slots</h4>
+          <p>The dual-slot design lets you have two containers ready at once — perfect for prepping multiple sauces or condiments during cooking.</p>
+        </div>
+        <div class="tip-card">
+          <h4>Don't Force It</h4>
+          <p>If a lid doesn't budge, don't apply extreme force. Try the warm water trick first, or use the claw attachment (on select models) for extra torque.</p>
+        </div>
+        <div class="tip-card">
+          <h4>Gift Idea</h4>
+          <p>GripMaster ships in presentation packaging, making it a perfect gift for seniors, arthritis sufferers, or anyone who loves a practical kitchen tool.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.4rem;">Grip<span>Master</span></a>
+        <p>The universal jar & bottle opener designed for every kitchen and every hand.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="support.html#faq">FAQ</a></li>
+          <li><a href="support.html#contact">Contact Us</a></li>
+          <li><a href="support.html#warranty">Warranty</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 GripMaster. All rights reserved.</span>
+      <span>Made with care for every kitchen.</span>
+    </div>
+  </footer>
+  <script>function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}</script>
+</body>
+</html>

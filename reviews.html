@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reviews — GripMaster Jar & Bottle Opener</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .page-hero {
+      padding: 100px 5% 80px;
+      position: relative; overflow: hidden;
+      background: linear-gradient(160deg, #0e0a13 0%, var(--bg) 60%);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero-inner { max-width: 680px; position: relative; z-index: 1; }
+    .page-hero h1 { margin: 12px 0 20px; }
+    .page-hero p { font-size: 1.1rem; }
+
+    /* RATING SUMMARY */
+    .rating-summary {
+      display: grid; grid-template-columns: auto 1fr auto;
+      gap: 60px; align-items: center;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 48px;
+      margin-bottom: 60px;
+    }
+    .rating-big {
+      text-align: center;
+    }
+    .rating-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 6rem;
+      color: var(--white);
+      line-height: 1;
+    }
+    .rating-stars-big { font-size: 1.6rem; color: var(--orange); letter-spacing: 4px; margin: 8px 0; }
+    .rating-count { font-size: 0.85rem; color: var(--text-muted); }
+
+    .rating-bars { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .bar-row { display: flex; align-items: center; gap: 12px; }
+    .bar-label { font-size: 0.85rem; color: var(--text-muted); width: 40px; text-align: right; flex-shrink: 0; }
+    .bar-track {
+      flex: 1; height: 8px;
+      background: var(--bg3);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%; border-radius: 4px;
+      background: var(--orange);
+      transition: width 0.6s ease;
+    }
+    .bar-pct { font-size: 0.82rem; color: var(--silver); width: 36px; flex-shrink: 0; }
+
+    .rating-highlights {
+      display: flex; flex-direction: column; gap: 16px; min-width: 200px;
+    }
+    .highlight-pill {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 10px 18px;
+      font-size: 0.82rem;
+      color: var(--silver-light);
+      text-align: center;
+    }
+    .highlight-pill strong { color: var(--orange); display: block; font-size: 1.1rem; }
+
+    /* FILTER BAR */
+    .filter-bar {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--silver);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.83rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: rgba(249,115,22,0.07);
+    }
+
+    /* REVIEW CARDS */
+    .reviews-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    }
+    .review-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .review-card:hover { border-color: rgba(249,115,22,0.2); transform: translateY(-3px); }
+    .rc-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .rc-stars { color: var(--orange); font-size: 0.95rem; letter-spacing: 2px; }
+    .rc-date { font-size: 0.78rem; color: var(--text-muted); }
+    .rc-title {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+    .rc-body {
+      font-size: 0.9rem;
+      color: var(--silver);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .rc-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .rc-reviewer { display: flex; align-items: center; gap: 10px; }
+    .rc-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), #c45d0e);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.82rem; color: #fff; flex-shrink: 0;
+    }
+    .rc-name { font-weight: 600; font-size: 0.85rem; color: var(--white); }
+    .rc-sub { font-size: 0.75rem; color: var(--text-muted); }
+    .rc-helpful {
+      font-size: 0.78rem; color: var(--text-muted);
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    /* VERIFIED BADGE */
+    .verified-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.72rem;
+      color: #4ade80;
+      font-weight: 500;
+    }
+
+    /* FEATURED REVIEW */
+    .featured-review {
+      background: linear-gradient(135deg, rgba(249,115,22,0.06), rgba(249,115,22,0.02));
+      border: 1px solid rgba(249,115,22,0.25);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-review::before {
+      content: '"';
+      font-family: 'DM Serif Display', serif;
+      font-size: 14rem;
+      color: var(--orange);
+      opacity: 0.04;
+      position: absolute;
+      top: -30px; left: 10px;
+      line-height: 1;
+    }
+    .fr-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(249,115,22,0.15);
+      border: 1px solid rgba(249,115,22,0.3);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--orange);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .fr-stars { color: var(--orange); font-size: 1.2rem; letter-spacing: 3px; margin-bottom: 16px; }
+    .fr-quote {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--silver-light);
+      line-height: 1.55;
+      max-width: 700px;
+      position: relative; z-index: 1;
+    }
+    .fr-reviewer { display: flex; align-items: center; gap: 14px; margin-top: 24px; }
+    .fr-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), #c45d0e);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: #fff; font-size: 1rem; flex-shrink: 0;
+    }
+    .fr-name { font-weight: 600; color: var(--white); }
+    .fr-sub { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* CTA */
+    .reviews-cta {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px;
+      text-align: center;
+      margin-top: 60px;
+    }
+    .reviews-cta h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--white); margin-bottom: 10px; }
+
+    @media (max-width: 860px) {
+      .rating-summary { grid-template-columns: 1fr; gap: 32px; }
+      .reviews-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Grip<span>Master</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="reviews.html" class="active">Reviews</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="index.html#buy" class="nav-cta">Buy Now</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <main>
+    <div class="page-hero">
+      <div class="page-hero-inner">
+        <span class="section-label">What Customers Say</span>
+        <h1>Real Reviews.<br>Real Kitchens.</h1>
+        <p>Over 10,000 verified customers have made GripMaster part of their daily cooking routine. Here's what they think.</p>
+      </div>
+    </div>
+
+    <section>
+      <!-- RATING SUMMARY -->
+      <div class="rating-summary">
+        <div class="rating-big">
+          <div class="rating-number">4.8</div>
+          <div class="rating-stars-big">★★★★★</div>
+          <div class="rating-count">Based on 10,247 reviews</div>
+        </div>
+        <div class="rating-bars">
+          <div class="bar-row">
+            <span class="bar-label">5 ★</span>
+            <div class="bar-track"><div class="bar-fill" style="width:78%"></div></div>
+            <span class="bar-pct">78%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">4 ★</span>
+            <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
+            <span class="bar-pct">14%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">3 ★</span>
+            <div class="bar-track"><div class="bar-fill" style="width:5%"></div></div>
+            <span class="bar-pct">5%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">2 ★</span>
+            <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
+            <span class="bar-pct">2%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">1 ★</span>
+            <div class="bar-track"><div class="bar-fill" style="width:1%"></div></div>
+            <span class="bar-pct">1%</span>
+          </div>
+        </div>
+        <div class="rating-highlights">
+          <div class="highlight-pill"><strong>94%</strong>Would recommend</div>
+          <div class="highlight-pill"><strong>97%</strong>Found it easy to use</div>
+          <div class="highlight-pill"><strong>91%</strong>Bought as a gift</div>
+        </div>
+      </div>
+
+      <!-- FILTER -->
+      <div class="filter-bar">
+        <button class="filter-btn active">All Reviews</button>
+        <button class="filter-btn">5 Stars</button>
+        <button class="filter-btn">4 Stars</button>
+        <button class="filter-btn">Arthritis / Accessibility</button>
+        <button class="filter-btn">Gift Buyers</button>
+        <button class="filter-btn">Seniors</button>
+      </div>
+
+      <!-- FEATURED REVIEW -->
+      <div class="featured-review">
+        <div class="fr-label">⭐ Editor's Pick</div>
+        <div class="fr-stars">★★★★★</div>
+        <p class="fr-quote">"I have severe rheumatoid arthritis in both hands and could no longer open jars on my own. My daughter bought me GripMaster and it has genuinely given me back my independence in the kitchen. I can cook full meals again without asking for help. Best purchase I've made in years."</p>
+        <div class="fr-reviewer">
+          <div class="fr-avatar">B</div>
+          <div>
+            <div class="fr-name">Barbara W., 72</div>
+            <div class="fr-sub">Verified Purchase · Phoenix, AZ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REVIEWS GRID -->
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <div class="rc-header">
+            <div class="rc-stars">★★★★★</div>
+            <div class="rc-date">March 2025</div>
+          </div>
+          <div class="rc-title">Works on absolutely every jar I own</div>
+          <div class="rc-body">I was skeptical because I've tried so many openers before. This one is different — the V-shape grip is brilliant. Pasta sauce, salsa, pickle jars, even a stubborn supplement bottle. Every single one opened without a fight.</div>
+          <div class="rc-footer">
+            <div class="rc-reviewer">
+              <div class="rc-avatar">J</div>
+              <div>
+                <div class="rc-name">James R.</div>
+                <div class="rc-sub"><span class="verified-badge">✓ Verified</span> · Seattle, WA</div>
+              </div>
+            </div>
+            <div class="rc-helpful">👍 142 found helpful</div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="rc-header">
+            <div class="rc-stars">★★★★★</div>
+            <div class="rc-date">February 2025</div>
+          </div>
+          <div class="rc-title">Best gift I ever bought my mom</div>
+          <div class="rc-body">My mom is 78 and has been struggling with jars for years. She refused to admit it was a problem until I showed her this. She calls it her "magic jar machine." I've since bought three more as gifts for friends her age.</div>
+          <div class="rc-footer">
+            <div class="rc-reviewer">
+              <div class="rc-avatar">S</div>
+              <div>
+                <div class="rc-name">Sarah K.</div>
+                <div class="rc-sub"><span class="verified-badge">✓ Verified</span> · Chicago, IL</div>
+              </div>
+            </div>
+            <div class="rc-helpful">👍 98 found helpful</div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="rc-header">
+            <div class="rc-stars">★★★★★</div>
+            <div class="rc-date">January 2025</div>
+          </div>
+          <div class="rc-title">Looks great on the counter too</div>
+          <div class="rc-body">Most kitchen gadgets are ugly and end up in a drawer. GripMaster actually looks sleek — like something from a professional kitchen. It lives on my counter and I use it every day. The dual-slot is brilliant for meal prep.</div>
+          <div class="rc-footer">
+            <div class="rc-reviewer">
+              <div class="rc-avatar">A</div>
+              <div>
+                <div class="rc-name">Alex M.</div>
+                <div class="rc-sub"><span class="verified-badge">✓ Verified</span> · Austin, TX</div>
+              </div>
+            </div>
+            <div class="rc-helpful">👍 87 found helpful</div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="rc-header">
+            <div class="rc-stars">★★★★☆</div>
+            <div class="rc-date">January 2025</div>
+          </div>
+          <div class="rc-title">Great for most jars — one minor issue</div>
+          <div class="rc-body">Works amazingly for 95% of my jars. The only ones it struggles with are super-small spice jars — they're almost too narrow to grip. Everything else: flawless. Would still give it 5 stars overall but wanted to be honest.</div>
+          <div class="rc-footer">
+            <div class="rc-reviewer">
+              <div class="rc-avatar">T</div>
+              <div>
+                <div class="rc-name">Thomas N.</div>
+                <div class="rc-sub"><span class="verified-badge">✓ Verified</span> · Boston, MA</div>
+              </div>
+            </div>
+            <div class="rc-helpful">👍 76 found helpful</div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="rc-header">
+            <div class="rc-stars">★★★★★</div>
+            <div class="rc-date">December 2024</div>
+          </div>
+          <div class="rc-title">After 3 hand surgeries, this changed everything</div>
+          <div class="rc-body">I had carpal tunnel surgery on both hands and my grip strength has never been the same. GripMaster means I don't have to ask my kids for help every time I need to open something. It's given me back independence I thought was gone.</div>
+          <div class="rc-footer">
+            <div class="rc-reviewer">
+              <div class="rc-avatar">L</div>
+              <div>
+                <div class="rc-name">Linda F.</div>
+                <div class="rc-sub"><span class="verified-badge">✓ Verified</span> · Tampa, FL</div>
+              </div>
+            </div>
+            <div class="rc-helpful">👍 203 found helpful</div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="rc-header">
+            <div class="rc-stars">★★★★★</div>
+            <div class="rc-date">November 2024</div>
+          </div>
+          <div class="rc-title">Bought for functionality, staying for convenience</div>
+          <div class="rc-body">My partner bought this when I was pregnant and couldn't open anything with my swollen hands. Now I'm not pregnant anymore and we still use it every day because it's just SO much easier. Total convert.</div>
+          <div class="rc-footer">
+            <div class="rc-reviewer">
+              <div class="rc-avatar">R</div>
+              <div>
+                <div class="rc-name">Rachel P.</div>
+                <div class="rc-sub"><span class="verified-badge">✓ Verified</span> · Portland, OR</div>
+              </div>
+            </div>
+            <div class="rc-helpful">👍 61 found helpful</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- LEAVE A REVIEW CTA -->
+      <div class="reviews-cta">
+        <h3>Have GripMaster? Share Your Story.</h3>
+        <p style="max-width:440px; margin: 8px auto 24px;">Your review helps other customers and helps us keep improving. We read every single one.</p>
+        <a href="https://amazon.com" target="_blank" class="btn btn-primary">Write a Review on Amazon →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.4rem;">Grip<span>Master</span></a>
+        <p>The universal jar & bottle opener designed for every kitchen and every hand.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="support.html#faq">FAQ</a></li>
+          <li><a href="support.html#contact">Contact Us</a></li>
+          <li><a href="support.html#warranty">Warranty</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 GripMaster. All rights reserved.</span>
+      <span>Made with care for every kitchen.</span>
+    </div>
+  </footer>
+  <script>
+    function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

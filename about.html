@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — GripMaster Jar & Bottle Opener</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .page-hero {
+      padding: 100px 5% 80px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #13100a 0%, var(--bg) 50%);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 70%);
+    }
+    .page-hero-inner { max-width: 680px; position: relative; z-index: 1; }
+    .page-hero h1 { margin: 12px 0 20px; }
+    .page-hero p { font-size: 1.1rem; }
+
+    /* ORIGIN */
+    .origin {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .origin-text h2 { margin: 12px 0 20px; }
+    .origin-text p { margin-bottom: 16px; }
+    .origin-visual {
+      position: relative;
+    }
+    .origin-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .origin-box::before {
+      content: '"';
+      font-family: 'DM Serif Display', serif;
+      font-size: 12rem;
+      color: var(--orange);
+      opacity: 0.06;
+      position: absolute;
+      top: -20px; left: 10px;
+      line-height: 1;
+    }
+    .origin-quote {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      color: var(--silver-light);
+      line-height: 1.5;
+      position: relative; z-index: 1;
+    }
+    .origin-attr {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      position: relative; z-index: 1;
+    }
+
+    /* MISSION */
+    .mission-section { background: var(--bg2); text-align: center; }
+    .mission-section h2 { max-width: 600px; margin: 12px auto 20px; }
+    .mission-section > p { max-width: 640px; margin: 0 auto 60px; }
+    .mission-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      text-align: left;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .mission-card:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-4px); }
+    .mission-icon { font-size: 2.2rem; margin-bottom: 16px; }
+    .mission-card h3 { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1.05rem; color: var(--white); margin-bottom: 10px; letter-spacing: 0; }
+
+    /* WHO */
+    .who-section h2 { margin: 12px 0 40px; }
+    .who-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .who-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .who-card:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-4px); }
+    .who-emoji { font-size: 2.4rem; margin-bottom: 12px; }
+    .who-card h4 { font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+    .who-card p { font-size: 0.85rem; margin: 0; }
+
+    /* SPECS */
+    .specs-section { background: var(--bg3); }
+    .specs-section h2 { margin: 12px 0 40px; }
+    .specs-table {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .spec-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+    .spec-val { color: var(--white); font-weight: 600; font-size: 0.9rem; }
+
+    @media (max-width: 860px) {
+      .origin { grid-template-columns: 1fr; gap: 40px; }
+      .who-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 580px) {
+      .who-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Grip<span>Master</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="index.html#buy" class="nav-cta">Buy Now</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <main>
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <div class="page-hero-inner">
+        <span class="section-label">Our Story</span>
+        <h1>Born From Frustration.<br>Built for Everyone.</h1>
+        <p>GripMaster started with a simple problem: stubborn jar lids that nobody could open. We built a solution that works for every container, every hand, every time.</p>
+      </div>
+    </div>
+
+    <!-- ORIGIN STORY -->
+    <section>
+      <div class="origin">
+        <div class="origin-text">
+          <span class="section-label">The Origin</span>
+          <h2>A Problem Worth Solving</h2>
+          <p>It started in a home kitchen. A jar of pasta sauce — sealed so tight that no amount of strength, hot water, or towel-wrapping would budge it. Sound familiar?</p>
+          <p>We set out to design something that didn't require brute strength or a pile of rubber bands. Something that used physics and smart engineering to do the hard work. The result was GripMaster.</p>
+          <p>The V-shaped tapered channel isn't just clever — it's automatic. Drop in any size container, and the geometry does the gripping. No adjustments, no settings, no frustration.</p>
+        </div>
+        <div class="origin-visual">
+          <div class="origin-box">
+            <p class="origin-quote">We didn't want to build a gadget. We wanted to build something that genuinely makes daily life a little easier for a lot of people.</p>
+            <p class="origin-attr">— GripMaster Design Team</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSION -->
+    <section class="mission-section">
+      <span class="section-label">Our Mission</span>
+      <h2>Independence in Every Kitchen</h2>
+      <p>We believe everyone deserves the ability to cook freely — without asking for help, without struggling, without pain. GripMaster is built around three core principles.</p>
+      <div class="grid-3">
+        <div class="mission-card">
+          <div class="mission-icon">🎯</div>
+          <h3>Universal by Design</h3>
+          <p>GripMaster accommodates an enormous range of container shapes and sizes — from skinny water bottles to wide-mouth mason jars — without any manual adjustment.</p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">💪</div>
+          <h3>Accessible to All</h3>
+          <p>Whether you have arthritis, limited grip strength, or just a particularly stubborn lid, GripMaster levels the playing field. No special technique required.</p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">✨</div>
+          <h3>Built to Last</h3>
+          <p>We use durable materials and thoughtful construction so GripMaster becomes a permanent fixture in your kitchen — not another drawer-filler gadget.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO IS IT FOR -->
+    <section>
+      <span class="section-label">Who It's For</span>
+      <h2>Made for Real People</h2>
+      <div class="who-grid">
+        <div class="who-card">
+          <div class="who-emoji">👵</div>
+          <h4>Seniors</h4>
+          <p>Maintain independence in the kitchen without struggling with stubborn lids.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-emoji">🤲</div>
+          <h4>Arthritis Sufferers</h4>
+          <p>Open jars without painful gripping or squeezing motions.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-emoji">👨‍🍳</div>
+          <h4>Home Cooks</h4>
+          <p>Speed up meal prep — stop fighting jars mid-recipe.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-emoji">🎁</div>
+          <h4>Gift Givers</h4>
+          <p>The perfect practical gift for anyone who cooks — or eats.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT SPECS -->
+    <section class="specs-section">
+      <span class="section-label">Product Details</span>
+      <h2>Specifications</h2>
+      <div class="specs-table">
+        <div class="spec-row">
+          <span class="spec-key">Product Name</span>
+          <span class="spec-val">GripMaster Universal Jar & Bottle Opener</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Compatible Containers</span>
+          <span class="spec-val">Jars, bottles, cans with twist-off lids</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Container Width Range</span>
+          <span class="spec-val">1.5" to 4.5" diameter</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Grip Material</span>
+          <span class="spec-val">High-friction rubber fins</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Shell Material</span>
+          <span class="spec-val">Impact-resistant ABS plastic</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Base</span>
+          <span class="spec-val">Anti-slip rubber rim</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Slots</span>
+          <span class="spec-val">2 (dual opener design)</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Cleaning</span>
+          <span class="spec-val">Wipe clean / dishwasher safe</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Color</span>
+          <span class="spec-val">Silver / Black</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.4rem;">Grip<span>Master</span></a>
+        <p>The universal jar & bottle opener designed for every kitchen and every hand.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="support.html#faq">FAQ</a></li>
+          <li><a href="support.html#contact">Contact Us</a></li>
+          <li><a href="support.html#warranty">Warranty</a></li>
+          <li><a href="support.html#returns">Returns</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 GripMaster. All rights reserved.</span>
+      <span>Made with care for every kitchen.</span>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>

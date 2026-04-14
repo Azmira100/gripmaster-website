@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — GripMaster Jar & Bottle Opener</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .page-hero {
+      padding: 100px 5% 80px;
+      position: relative; overflow: hidden;
+      background: linear-gradient(160deg, #0a0d13 0%, var(--bg) 60%);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero-inner { max-width: 680px; position: relative; z-index: 1; }
+    .page-hero h1 { margin: 12px 0 20px; }
+    .page-hero p { font-size: 1.1rem; }
+
+    /* SUPPORT CARDS ROW */
+    .support-options {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      margin-bottom: 80px;
+    }
+    .support-opt {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .support-opt:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-4px); }
+    .so-icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .so-title { font-family: 'DM Sans', sans-serif; font-weight: 700; color: var(--white); font-size: 1rem; margin-bottom: 8px; }
+    .so-desc { font-size: 0.86rem; color: var(--silver); margin: 0; }
+
+    /* FAQ */
+    .faq-section { background: var(--bg2); }
+    .faq-section h2 { margin: 12px 0 40px; }
+    .faq-list { max-width: 780px; display: flex; flex-direction: column; gap: 0; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; background: none; border: none; padding: 22px 0;
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; text-align: left;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      gap: 20px;
+    }
+    .faq-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(249,115,22,0.2); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s;
+      color: var(--silver);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      padding: 0;
+    }
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      padding-bottom: 22px;
+    }
+
+    /* CONTACT FORM */
+    .contact-section { }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .contact-info h2 { margin: 12px 0 20px; }
+    .contact-info p { margin-bottom: 28px; }
+    .contact-channels { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .channel-item {
+      display: flex; gap: 16px; align-items: center;
+      padding: 16px 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .ch-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .ch-label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
+    .ch-val { font-weight: 600; color: var(--white); font-size: 0.92rem; }
+
+    .contact-form {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+    }
+    .contact-form h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--white); margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--silver-light);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--orange); }
+    .form-group textarea { min-height: 110px; }
+
+    /* WARRANTY / RETURNS */
+    .policy-section { background: var(--bg3); }
+    .policy-section h2 { margin: 12px 0 40px; }
+    .policy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .policy-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .policy-card .pc-icon { font-size: 2rem; margin-bottom: 14px; }
+    .policy-card h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; color: var(--white); font-size: 1.05rem; margin-bottom: 12px; }
+    .policy-card p { font-size: 0.9rem; margin-bottom: 10px; }
+    .policy-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; padding: 0; margin-top: 14px; }
+    .policy-card ul li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.88rem; color: var(--silver);
+    }
+    .policy-card ul li::before { content: '→'; color: var(--orange); flex-shrink: 0; margin-top: 1px; }
+
+    @media (max-width: 860px) {
+      .support-options { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .policy-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Grip<span>Master</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="support.html" class="active">Support</a></li>
+      <li><a href="index.html#buy" class="nav-cta">Buy Now</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <main>
+    <div class="page-hero">
+      <div class="page-hero-inner">
+        <span class="section-label">We're Here to Help</span>
+        <h1>Customer Support</h1>
+        <p>Questions about your GripMaster? We've got you covered — from setup tips to returns.</p>
+      </div>
+    </div>
+
+    <section>
+      <!-- SUPPORT OPTIONS -->
+      <div class="support-options">
+        <a href="#faq" class="support-opt">
+          <div class="so-icon">❓</div>
+          <div class="so-title">FAQ</div>
+          <p class="so-desc">Browse answers to the most common questions about using and caring for GripMaster.</p>
+        </a>
+        <a href="#contact" class="support-opt">
+          <div class="so-icon">✉️</div>
+          <div class="so-title">Contact Us</div>
+          <p class="so-desc">Send us a message and we'll respond within 1 business day.</p>
+        </a>
+        <a href="#warranty" class="support-opt">
+          <div class="so-icon">🛡️</div>
+          <div class="so-title">Warranty & Returns</div>
+          <p class="so-desc">Read our warranty coverage and 30-day return policy.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+      <span class="section-label">Common Questions</span>
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            What sizes of jars and bottles does GripMaster work with?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">GripMaster is designed to accommodate containers ranging from approximately 1.5 inches to 4.5 inches in diameter. This covers the vast majority of kitchen jars and bottles — from slender salad dressing bottles to wide-mouth mason jars and large pickle jars.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Does GripMaster work for people with arthritis or limited hand strength?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes — this is one of GripMaster's primary use cases. Because the device holds the jar firmly without requiring you to grip it, you can focus all of your hand strength on turning the lid. Many customers with arthritis, carpal tunnel, or post-surgery limitations report it has restored their kitchen independence. No squeezing or pinching of the device itself is needed.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How do I clean GripMaster?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">The rubber fins can be wiped clean with a damp cloth after use. For deeper cleaning, you can rinse the rubber fins under warm water. The main body is wipe-clean. We recommend wiping down the fins regularly to maintain optimal grip — food residue can reduce friction over time. The product is also top-shelf dishwasher safe.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            The jar isn't gripping tightly enough — what should I do?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">First, make sure the jar is fully seated in the slot — it should slide all the way down until it stops naturally. If the jar is very small (under 1.5"), it may be too narrow for a firm grip. For very stubborn vacuum-sealed lids, try running warm water over the metal lid for 30 seconds before using GripMaster — this slightly expands the metal and makes it easier to break the seal.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Does it work on plastic caps and flip-top lids?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">GripMaster is optimized for standard twist-off lids (metal or plastic screw-top). It is not designed for flip-top caps, crown bottle caps (beer-style), or push-and-turn childproof caps. It works best with the smooth, cylindrical containers commonly used for food jars, sauce bottles, and supplement containers.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Where is GripMaster made?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">GripMaster is designed in the USA and manufactured to strict quality standards. All materials are food-safe and BPA-free. The rubber fins are made from high-friction, food-grade rubber.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can I use only one slot at a time?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Absolutely. Each slot operates independently — you can use one while the other is empty. The dual-slot design is a convenience feature for home cooks who frequently open multiple containers during meal prep, but there's no requirement to use both simultaneously.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Is GripMaster safe to use on glass jars?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes — the rubber fins are designed to grip firmly without scratching or damaging glass or plastic containers. The contact pressure is distributed evenly across the sides of the jar, not concentrated in one spot, which prevents cracking or marking on glass surfaces.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="contact-inner">
+        <div class="contact-info">
+          <span class="section-label">Get In Touch</span>
+          <h2>We'd Love to Hear From You</h2>
+          <p>Whether you have a question about your order, need help using GripMaster, or want to share feedback — our support team is ready to help.</p>
+          <p>We respond to all messages within <strong style="color:var(--white);">1 business day</strong>.</p>
+          <div class="contact-channels">
+            <div class="channel-item">
+              <div class="ch-icon">📧</div>
+              <div>
+                <div class="ch-label">Email</div>
+                <div class="ch-val">support@gripmaster.com</div>
+              </div>
+            </div>
+            <div class="channel-item">
+              <div class="ch-icon">⏰</div>
+              <div>
+                <div class="ch-label">Support Hours</div>
+                <div class="ch-val">Mon–Fri, 9am–5pm EST</div>
+              </div>
+            </div>
+            <div class="channel-item">
+              <div class="ch-icon">📦</div>
+              <div>
+                <div class="ch-label">Order Support</div>
+                <div class="ch-val">Through Amazon for Amazon orders</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3>Send Us a Message</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Jane" />
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="jane@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Topic</label>
+            <select>
+              <option value="">Select a topic...</option>
+              <option>Product Question</option>
+              <option>Order / Shipping</option>
+              <option>Warranty Claim</option>
+              <option>Return Request</option>
+              <option>Feedback / Suggestion</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us how we can help..."></textarea>
+          </div>
+          <button type="button" class="btn btn-primary" style="width:100%; justify-content:center;" onclick="handleSubmit(this)">Send Message →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- WARRANTY & RETURNS -->
+    <section class="policy-section" id="warranty">
+      <span class="section-label">Our Policies</span>
+      <h2>Warranty & Returns</h2>
+      <div class="policy-grid">
+
+        <div class="policy-card" id="returns">
+          <div class="pc-icon">🛡️</div>
+          <h3>1-Year Limited Warranty</h3>
+          <p>GripMaster products are covered against manufacturing defects for one year from the date of purchase.</p>
+          <ul>
+            <li>Defective rubber fins that crack or tear under normal use</li>
+            <li>Shell cracking due to material failure (not impact damage)</li>
+            <li>Grip mechanism failure that prevents normal operation</li>
+            <li>Any other manufacturing defect</li>
+          </ul>
+          <p style="margin-top:16px;">To claim warranty, contact us with your order number and a photo of the issue. We'll send a replacement at no charge.</p>
+        </div>
+
+        <div class="policy-card">
+          <div class="pc-icon">🔄</div>
+          <h3>30-Day Returns</h3>
+          <p>Not satisfied? Return your GripMaster within 30 days of delivery for a full refund — no questions asked.</p>
+          <ul>
+            <li>Item must be in original or near-original condition</li>
+            <li>Include your order number with the return</li>
+            <li>Amazon orders are returned through Amazon's standard process</li>
+            <li>Refunds processed within 3–5 business days of receipt</li>
+          </ul>
+          <p style="margin-top:16px;">For Amazon purchases, initiate your return through your Amazon account under "My Orders." For direct purchases, contact us at support@gripmaster.com.</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.4rem;">Grip<span>Master</span></a>
+        <p>The universal jar & bottle opener designed for every kitchen and every hand.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#warranty">Warranty</a></li>
+          <li><a href="#returns">Returns</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 GripMaster. All rights reserved.</span>
+      <span>Made with care for every kitchen.</span>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}
+
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    function handleSubmit(btn) {
+      btn.textContent = '✓ Message Sent!';
+      btn.style.background = '#16a34a';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Send Message →';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
